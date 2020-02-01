@@ -11,11 +11,13 @@ class Command(BaseCommand):
 	def add_arguments(self, parser):
 		parser.add_argument('data-dir', type=str, help="data directory")
 
+	## Force type for csv field or return None
 	def parse_field(self, value, type):
 		if value:
 			return type(value)
 		return None
 	
+	## Read csv file, create instances of Listing model and bulk create
 	def import_csv_to_db(self, filename):
 		listings = []
 		try:
@@ -49,7 +51,7 @@ class Command(BaseCommand):
 						zipcode = self.parse_field(row[22], str),
 					)
 					listings.append(listing)
-
+			## bulk create Listings
 			Listing.objects.bulk_create(listings)
 			return len(listings)
 		except:
@@ -60,13 +62,16 @@ class Command(BaseCommand):
 		self.stdout.write(self.style.SUCCESS('Attempting to read %s' % data_dir))
 
 		try:
+			## Iterate through files in data directory
 			for file in os.listdir(data_dir):
 				filename = os.fsdecode(file)
 
+				## Filter csv files
 				if filename.endswith(".csv"): 
 					filename = os.path.join(data_dir, filename)
 					self.stdout.write(self.style.SUCCESS('Importing data from %s' % filename))
 
+					## Begin csv to db
 					num_of_rows = self.import_csv_to_db(filename)
 					if num_of_rows:
 						self.stdout.write(self.style.SUCCESS('Sucessfully imported %d rows from %s' % (num_of_rows, filename)))
@@ -76,4 +81,3 @@ class Command(BaseCommand):
 
 		except:
 			raise CommandError('%s error \n%s' % (sys.exc_info()[0].__class__.__name__, traceback.format_exc()))
-			print(traceback.format_exc())
