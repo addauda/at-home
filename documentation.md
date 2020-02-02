@@ -65,12 +65,12 @@ Sample JSON
 		Sample response
     	```
     	{
-    		"address": [
-               		"This field is required."
-            	],
-		"zipcode": [
-                	"This field is required."
-            	]
+			"address": [
+				"This field is required."
+			],
+			"zipcode": [
+				"This field is required."
+			]
     	}
     	```
 
