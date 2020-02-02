@@ -34,7 +34,7 @@ Sample JSON
 
 ## API Endpoints
 ---
-- ### Creates a new listing
+- ### Create a new listing
 
   | Verb | Route |
   | ----------- | ----------- |
