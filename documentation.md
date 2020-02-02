@@ -66,11 +66,11 @@ Sample JSON
     	```
     	{
     		"address": [
-                "This field is required."
-            ],
-			"zipcode": [
-                "This field is required."
-            ]
+               		"This field is required."
+            	],
+		"zipcode": [
+                	"This field is required."
+            	]
     	}
     	```
 
