@@ -60,11 +60,17 @@ Sample JSON
 	
 	- 400 BAD REQUEST
     	
+		You can expect to receive a list of fields and respective errors.
+
+		Sample response
     	```
     	{
-    		"subscriber_id": 0,
-    		"data": {},
-    		"message_tag": "ACCOUNT_UPDATE"
+    		"address": [
+                "This field is required."
+            ],
+			"zipcode": [
+                "This field is required."
+            ]
     	}
     	```
 
@@ -83,14 +89,18 @@ Sample JSON
 
 	- 200 OK
   
-	   Response data is paginated with maximum page size of 50 listings
+		Response data is paginated with maximum page size of 50 listings. Use url in `next` field to retrieve next page. 
 
+		Sample response
     	```
     	{
-    		"subscriber_id": 0,
-    		"data": {},
-    		"message_tag": "ACCOUNT_UPDATE"
-    	}
+    		"count": 448
+        	"next": "http://127.0.0.1:8000/zlistings/?limit=50&offset=50",
+			"previous": null,
+			"results": [
+				{ See Zlisting JSON }, { } ...
+			]
+		}
   		```
 
 	- 404 NOT FOUND
@@ -114,12 +124,10 @@ Sample JSON
 
     - 200 OK
     	```
-    	{
-    		"subscriber_id": 0,
-    		"data": {},
-    		"message_tag": "ACCOUNT_UPDATE"
-    	}
-  		```
+		{
+			See Zlisting JSON
+		}
+		```
 	- 404 NOT FOUND
 
 ---

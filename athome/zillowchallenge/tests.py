@@ -94,8 +94,8 @@ class ListingTestCase(APITestCase):
 
 	## Test to retrieve a single listing
 	def test_get_single_listing(self):
-		response = self.client.get('/zlistings/1')
-		self.assertRedirects(response, '/zlistings/1/', status_code=301, target_status_code=200)
+		response = self.client.get('/zlistings/1/')
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 	## Test to update a single listing
