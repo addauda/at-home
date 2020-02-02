@@ -1,6 +1,6 @@
 """Custom django command to perform data import"""
 from django.core.management.base import BaseCommand, CommandError
-from athome.zillowchallenge.models import Listing
+from athome.zillowchallenge.models import ZListing
 import os
 import sys
 import traceback
@@ -26,7 +26,7 @@ class Command(BaseCommand):
 				reader = csv.reader(csv_file, delimiter=',', quotechar='|')
 				next(reader)
 				for row in reader:
-					listing = Listing(
+					listing = ZListing(
 						id = self.parse_field(row[0], int),
 						area_unit = self.parse_field(row[1], str),
 						bathrooms = self.parse_field(row[2], float),
@@ -53,7 +53,7 @@ class Command(BaseCommand):
 					)
 					listings.append(listing)
 			## bulk create Listings
-			Listing.objects.bulk_create(listings)
+			ZListing.objects.bulk_create(listings)
 			return len(listings)
 		except Exception:
 			raise

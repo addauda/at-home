@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Listing(models.Model):
+class ZListing(models.Model):
 
 	class HomeType(models.TextChoices):
 		SINGLE_FAMILY = 'SingleFamily'

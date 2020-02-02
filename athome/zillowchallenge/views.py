@@ -1,11 +1,11 @@
 from rest_framework import generics
-from .models import Listing
-from .serializers import ListingSerializer
+from .models import ZListing
+from .serializers import ZListingSerializer
 
-class ListingList(generics.ListCreateAPIView):
-	queryset = Listing.objects.all()
-	serializer_class = ListingSerializer
+class ZListingList(generics.ListCreateAPIView):
+	queryset = ZListing.objects.all()
+	serializer_class = ZListingSerializer
 
-class ListingDetail(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Listing.objects.all()
-	serializer_class = ListingSerializer
+class ZListingDetail(generics.RetrieveUpdateDestroyAPIView):
+	queryset = ZListing.objects.all()
+	serializer_class = ZListingSerializer

@@ -2,13 +2,13 @@ import json
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
-from .models import Listing
+from .models import ZListing
 
 
 class ListingTestCase(APITestCase):
 
 	def setUp(self):
-		Listing.objects.create(
+		ZListing.objects.create(
 			id = 1,
 			price = 21.0,
 			address = '1 Way',
@@ -16,7 +16,7 @@ class ListingTestCase(APITestCase):
 			state = 'ON',
 			zipcode = '11111',
 		)
-		Listing.objects.create(
+		ZListing.objects.create(
 			id = 2,
 			price = 22.0,
 			address = '2 Way',
@@ -24,7 +24,7 @@ class ListingTestCase(APITestCase):
 			state = 'ON',
 			zipcode = '22222',
 		)
-		Listing.objects.create(
+		ZListing.objects.create(
 			id = 3,
 			price = 23.0,
 			address = '3 Way',
@@ -35,7 +35,7 @@ class ListingTestCase(APITestCase):
 
 	## Test to retrieve all listings
 	def test_get_all_listings(self):
-		response = self.client.get('/listings/')
+		response = self.client.get('/zlistings/')
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
 		self.assertEqual(len(response.data['results']), 3) ## Accessing results here due to pagination
 
@@ -62,9 +62,9 @@ class ListingTestCase(APITestCase):
 			'state': 'CA',
 			'zipcode': '91316'
 		}
-		response = self.client.post('/listings/', test_listing)
+		response = self.client.post('/zlistings/', test_listing)
 		self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-		self.assertEqual(len(Listing.objects.all()), 4)
+		self.assertEqual(len(ZListing.objects.all()), 4)
 
 
 	## Test to create a new listing with missing parameters (address)
@@ -88,14 +88,14 @@ class ListingTestCase(APITestCase):
 			'state': 'CA',
 			'zipcode': '91316'
 		}
-		response = self.client.post('/listings/', test_listing)
+		response = self.client.post('/zlistings/', test_listing)
 		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
 	## Test to retrieve a single listing
 	def test_get_single_listing(self):
-		response = self.client.get('/listings/1')
-		self.assertRedirects(response, '/listings/1/', status_code=301, target_status_code=200)
+		response = self.client.get('/zlistings/1')
+		self.assertRedirects(response, '/zlistings/1/', status_code=301, target_status_code=200)
 
 
 	## Test to update a single listing
@@ -109,14 +109,14 @@ class ListingTestCase(APITestCase):
 			'state': 'ON',
 			'zipcode': '91316'
 		}
-		response = self.client.put('/listings/2/', test_listing)
-		listing = Listing.objects.get(id=2)
+		response = self.client.put('/zlistings/2/', test_listing)
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
-		self.assertEqual(listing.link, test_listing['link'])
+		zlisting = ZListing.objects.get(id=2)
+		self.assertEqual(zlisting.link, test_listing['link'])
 
 
 	## Test to delete a single listing
 	def test_delete_single_listing(self):
-		response = self.client.delete('/listings/3/')
+		response = self.client.delete('/zlistings/3/')
 		self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-		self.assertEqual(len(Listing.objects.all()), 2)
+		self.assertEqual(len(ZListing.objects.all()), 2)

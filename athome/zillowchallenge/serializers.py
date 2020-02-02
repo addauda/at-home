@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Listing
+from .models import ZListing
 
-class ListingSerializer(serializers.ModelSerializer):
+class ZListingSerializer(serializers.ModelSerializer):
 
 	class Meta:
-		model = Listing
+		model = ZListing
 		fields = '__all__'
