@@ -1,3 +1,4 @@
+"""Custom django command to perform data import"""
 from django.core.management.base import BaseCommand, CommandError
 from athome.zillowchallenge.models import Listing
 import os
@@ -11,14 +12,14 @@ class Command(BaseCommand):
 	def add_arguments(self, parser):
 		parser.add_argument('data-dir', type=str, help="data directory")
 
-	## Force type for csv field or return None
 	def parse_field(self, value, type):
+		"""Force type for csv field or return None """
 		if value:
 			return type(value)
 		return None
 	
-	## Read csv file, create instances of Listing model and bulk create
 	def import_csv_to_db(self, filename):
+		"""Read csv file, create instances of Listing model and bulk create"""
 		listings = []
 		try:
 			with open(filename, 'r') as csv_file:
@@ -54,7 +55,7 @@ class Command(BaseCommand):
 			## bulk create Listings
 			Listing.objects.bulk_create(listings)
 			return len(listings)
-		except:
+		except Exception:
 			raise
 
 	def handle(self, *args, **options):
@@ -79,5 +80,5 @@ class Command(BaseCommand):
 		except FileNotFoundError:
 			raise CommandError('Directory %s does not exist' % data_dir)
 
-		except:
+		except Exception:
 			raise CommandError('%s error \n%s' % (sys.exc_info()[0].__class__.__name__, traceback.format_exc()))

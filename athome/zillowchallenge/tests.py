@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 from .models import Listing
 
-# Create your tests here.
+
 class ListingTestCase(APITestCase):
 
 	def setUp(self):
@@ -37,7 +37,8 @@ class ListingTestCase(APITestCase):
 	def test_get_all_listings(self):
 		response = self.client.get('/listings/')
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
-		self.assertEqual(len(response.data), 3)
+		self.assertEqual(len(response.data['results']), 3) ## Accessing results here due to pagination
+
 
 	## Test to create a new listing with required parameters present
 	def test_create_listing_with_required(self):
@@ -65,6 +66,7 @@ class ListingTestCase(APITestCase):
 		self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 		self.assertEqual(len(Listing.objects.all()), 4)
 
+
 	## Test to create a new listing with missing parameters (address)
 	def test_create_listing_without_required(self):
 		test_listing = {
@@ -89,10 +91,12 @@ class ListingTestCase(APITestCase):
 		response = self.client.post('/listings/', test_listing)
 		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+
 	## Test to retrieve a single listing
 	def test_get_single_listing(self):
 		response = self.client.get('/listings/1')
 		self.assertRedirects(response, '/listings/1/', status_code=301, target_status_code=200)
+
 
 	## Test to update a single listing
 	def test_update_single_listing(self):
@@ -109,6 +113,7 @@ class ListingTestCase(APITestCase):
 		listing = Listing.objects.get(id=2)
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
 		self.assertEqual(listing.link, test_listing['link'])
+
 
 	## Test to delete a single listing
 	def test_delete_single_listing(self):
