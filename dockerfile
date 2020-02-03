@@ -10,4 +10,12 @@ RUN ls -la ./*
 
 EXPOSE 8000
 
-CMD ["/bin/bash", "-c", "python manage.py makemigrations zillowchallenge && python manage.py migrate && python manage.py import_zillow ./data/output && python manage.py runserver 0.0.0.0:8000"]
+# DB migrations
+RUN python manage.py makemigrations zillowchallenge
+RUN python manage.py migrate
+
+# Zillow import
+RUN python manage.py import_zillow ./data/output
+
+# Start command
+CMD ["/bin/bash", "-c", "python manage.py runserver 0.0.0.0:8000"]
