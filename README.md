@@ -20,6 +20,7 @@ An API Zillow Listings built using DRF.
 
 ### Assumptions
 - I sought to establish context for the data and decided on the data being a snapshot of third-party data. Data synchronization is one-way. Fields are not updated once ingested.
+- Data is sourced from a backend API so I assumed data validation would be handled by the preprocessing phase
 - Due to the number of columns with null data, I designated the id, address, price, zipcode, state, city as required fields and the rest as optional. 
 
 ### Task Breakdown
