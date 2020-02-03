@@ -1,0 +1,11 @@
+.pylintrc
+db.sqlite3
+*.log
+.env
+.git
+.DS_Store
+.gitignore
+documentation.md
+README.md
+.dockerignore
+__pycache__/
